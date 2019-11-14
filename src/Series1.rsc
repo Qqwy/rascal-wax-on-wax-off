@@ -14,7 +14,9 @@ module Series1
  * - import this module and invoke helloWorld.
  */
  
+import IO;
 void helloWorld() {
+     println("Hello, World!");
 } 
 
 
@@ -25,12 +27,27 @@ void helloWorld() {
  */
  
 void fizzBuzz() {
-
+     for(int n <- [1..100]) {
+          if(n % 15 == 0) {
+              println("FizzBuzz");
+          } else if(n % 5 == 0) {
+              println("Buzz");
+          } else if(n % 3 == 0) {
+              println("Fizz");   
+          } else {
+              println(n);
+          }
+     }
 }
 
 list[str] fizzBuzz() {
-
+    return [fizzbuzzify(i % 5 == 0, i % 3 == 0, i) | i <- [1..100]];
 }
+
+str fizzbuzzify(true, true, _) = "Fizzbuzz";
+str fizzbuzzify(true, _, _) = "Buzz";
+str fizzbuzzify(_, true, _) = "Fizz";
+str fizzbuzzify(_, _, i) = "<i>";
 
 /*
  * Factorial
@@ -41,7 +58,11 @@ list[str] fizzBuzz() {
  
 
 int factorial(int n) {
-
+    switch(n) {
+         case 0: return 1;
+         case 1: return 1;
+         case n: return factorial(n-1) + factorial(n-2);
+    }
 }
 
 int fact(0) = 1;
@@ -54,14 +75,24 @@ int fact(1) = 1;
  * Comprehensions
  * - use println to see the result
  */
+
+import List;
  
 void comprehensions() {
 
   // construct a list of squares of integer from 0 to 9 (use range [0..10])
+  xs = [x*x | x <- [0..10]];
+
+  int square(int x) { return x * x};
+  xs2 = mapper([0..10], square);
+  println("<xs2>");
   
   // same, but construct a set
+  ys = {x*x | x <- [0..10]};
   
   // same, but construct a map
+  zs = (x:x*x | x <- [0..10]);
+  println(zs);
 
   // construct a list of factorials from 0 to 9
   
@@ -82,18 +113,15 @@ void patternMatching() {
  
   // print all splits of list
   list[int] aList = [1,2,3,4,5];
-  for ([/*TODO*/] := aList) {
-    ;
+  for ([*hd, *tl] := aList) {
+    println("<hd>, <tl>";
   }
   
   // print all partitions of a set
   set[int] aSet = {1,2,3,4,5};
-  for ({/*TODO*/} := aSet) {
-    ;
+  for ({*partition} := aSet) {
+    println("<partition>";
   } 
-
-  
-
 }  
  
  
